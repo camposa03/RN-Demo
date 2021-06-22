@@ -25,7 +25,6 @@ const LoginScreen = ({ navigation }) => {
                        value={password}
                        onChangeText={text =>setPassword(text)} />
             </View>
-
             <Button containerStyle={styles.button} 
                     title="Login" />
             <Button containerStyle={styles.button} 
