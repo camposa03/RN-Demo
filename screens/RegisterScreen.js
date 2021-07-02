@@ -12,8 +12,7 @@ const RegisterScreen = ({ navigation }) => {
 
     const register = async () => {
         try {
-            const user = await auth.createUserWithEmailAndPassword(email, password);
-            console.log(user);
+            const userCredential = await auth.createUserWithEmailAndPassword(email, password);
         } catch (error) {
             console.log(error);
         }

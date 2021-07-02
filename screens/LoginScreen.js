@@ -1,11 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, isValidElement } from 'react';
+import { Alert } from 'react-native';
 import { View, Text, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { Button, Input, Image } from 'react-native-elements';
+import { auth } from '../firebase';
 
 const LoginScreen = ({ navigation }) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((authUser) => {
+            console.log("Auth listener");
+            if (authUser) {
+                navigation.replace("Home");
+            }
+        });
+        return unsubscribe;
+    }, []);
+
+    login = async () => {
+        if (!isValid()) {
+            Alert.alert("Sign-In", "Please provide your login credentials");
+            return;
+        }
+        try {
+            const userCredential = await auth.signInWithEmailAndPassword(email, password); 
+        } catch (error) {
+            console.log(error);
+        }
+        console.log("user logged in");
+    }
+
+    // TODO:  Move to another file in case validation logic gets more complicated
+    isValid = () => {
+        if (!email.trim() || !password.trim()) {
+            return false;
+        }
+        return true;
+    }
 
     return (
         <KeyboardAvoidingView style={styles.container}>
@@ -26,7 +59,8 @@ const LoginScreen = ({ navigation }) => {
                        onChangeText={text =>setPassword(text)} />
             </View>
             <Button containerStyle={styles.button} 
-                    title="Login" />
+                    title="Login" 
+                    onPress={login}/>
             <Button containerStyle={styles.button} 
                     type="outline" 
                     title="Register"
