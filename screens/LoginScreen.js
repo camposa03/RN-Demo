@@ -1,7 +1,9 @@
-import React, { useState, useEffect, isValidElement } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Alert } from 'react-native';
+import { Platform } from 'react-native';
 import { View, Text, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { Button, Input, Image } from 'react-native-elements';
+import { initialWindowSafeAreaInsets } from 'react-native-safe-area-context';
 import { auth } from '../firebase';
 
 const LoginScreen = ({ navigation }) => {
@@ -19,8 +21,13 @@ const LoginScreen = ({ navigation }) => {
         return unsubscribe;
     }, []);
 
-    login = async () => {
+    const login = async () => { 
         if (!isValid()) {
+            if (Platform.OS !== 'android' && Platform.OS !== 'ios') {
+                //for woking with web apps
+                window.alert("Please provide your login credentials");
+                return;
+            }
             Alert.alert("Sign-In", "Please provide your login credentials");
             return;
         }
@@ -33,7 +40,7 @@ const LoginScreen = ({ navigation }) => {
     }
 
     // TODO:  Move to another file in case validation logic gets more complicated
-    isValid = () => {
+    const isValid = () => {
         if (!email.trim() || !password.trim()) {
             return false;
         }
