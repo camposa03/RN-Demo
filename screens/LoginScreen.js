@@ -3,7 +3,6 @@ import { Alert } from 'react-native';
 import { Platform } from 'react-native';
 import { View, Text, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { Button, Input, Image } from 'react-native-elements';
-import { initialWindowSafeAreaInsets } from 'react-native-safe-area-context';
 import { auth } from '../firebase';
 
 const LoginScreen = ({ navigation }) => {
