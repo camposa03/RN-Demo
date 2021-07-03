@@ -51,12 +51,12 @@ const LoginScreen = ({ navigation }) => {
                        autoFocus 
                        type="email" 
                        value={email} 
-                       onChangeText={ text => setEmail(text)} />
+                       onChangeText={ text => setEmail(text.trim())} />
                 <Input placeholder="Password" 
                        secureTextEntry 
                        type="password"
                        value={password}
-                       onChangeText={text =>setPassword(text)} />
+                       onChangeText={text =>setPassword(text.trim())} />
             </View>
             <Button containerStyle={styles.button} 
                     title="Login" 
